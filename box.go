@@ -85,14 +85,16 @@ func (b *box) SumArea() float64 {
 // whether circles are not exist in the list, then returns an error
 func (b *box) RemoveAllCircles() error {
 	var deletedCount int = 0
-	for k, v := range b.shapes {
+	shapesCopy := make([]Shape, len(b.shapes))
+	copy(shapesCopy, b.shapes)
+	for k, v := range shapesCopy {
 		if v.ShapeType() == "Circle" {
 			b.removeElement(k - deletedCount)
 			deletedCount += 1
 		}
 	}
 	if deletedCount == 0 {
-		return errors.New("No circles to delete")
+		return errors.New("no circles to delete")
 	}
 	return nil
 }
